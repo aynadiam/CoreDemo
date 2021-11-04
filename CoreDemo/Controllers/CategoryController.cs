@@ -10,11 +10,11 @@ namespace CoreDemo.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoryManager cm = new CategoryManager(new EfCategoryRepository());
+        readonly CategoryManager cm = new (new EfCategoryRepository());
 
         public IActionResult Index()
         {
-            var values = cm.GetList();
+            var values = cm.TGetList();
             return View(values);
         }
     }

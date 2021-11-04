@@ -24,6 +24,11 @@ namespace EntityLayer.Concrete
         public Category Category { get; set; }
         //
         //
+        //Her Bloğun Bir Yazarı Olacak
+        public int? WriterId { get; set; }
+        public Writer Writer { get; set; }
+        //
+        //
         //Comment de Listelenecek
         public List<Comment> Comments { get; set; }
     }

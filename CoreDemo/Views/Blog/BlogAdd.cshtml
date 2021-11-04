@@ -1,0 +1,57 @@
+﻿@model Blog
+
+@{
+    ViewData["Title"] = "Yeni Blog Ekle";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="page-header">
+        <h3 class="page-title"> @ViewData["Title"] </h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+
+                    <form asp-action="BlogAdd" class="forms-sample">
+                        <div class="form-group">
+                            <label>Blog Başlığı</label>
+                            <input asp-for="BlogTitle" class="form-control" placeholder="Başlık">
+                            <span asp-validation-for="BlogTitle" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Blog Görseli</label>
+                            <input asp-for="BlogImage" class="form-control" placeholder="Görsel">
+                            <span asp-validation-for="BlogImage" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Blog Küçük Görseli</label>
+                            <input asp-for="BlogThumbnailImage" class="form-control" placeholder="Küçük Görsel">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.KategoryId"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Blog İçeriği</label>
+                            <textarea asp-for="BlogContent" class="form-control" rows="4" placeholder="İçerik"></textarea>
+                            <span asp-validation-for="BlogContent" class="text-danger"></span>
+                        </div>
+                        <input type="submit" value="Yazıyı Kaydet" class="btn btn-gradient-primary mr-2">
+                        <a asp-action="BlogListByWriter" class="btn btn-light">Vazgeç</a>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
