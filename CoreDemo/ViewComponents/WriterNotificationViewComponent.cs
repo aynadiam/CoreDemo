@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BusinessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,11 @@ namespace CoreDemo.ViewComponents
 {
     public class WriterNotificationViewComponent : ViewComponent
     {
+        readonly NotificationManager nm = new(new EfNotificationRepository());
         public IViewComponentResult Invoke()
         {
-            return View();
+            var values = nm.TGetList();
+            return View(values);
         }
     }
 }

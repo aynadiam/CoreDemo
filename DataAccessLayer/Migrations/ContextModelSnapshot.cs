@@ -89,6 +89,27 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Blogs");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.BlogRayting", b =>
+                {
+                    b.Property<int>("BlogRaytingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogRaytingCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogTotalScore")
+                        .HasColumnType("int");
+
+                    b.HasKey("BlogRaytingId");
+
+                    b.ToTable("BlogRaytings");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -118,6 +139,9 @@ namespace DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BlogId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BlogScore")
                         .HasColumnType("int");
 
                     b.Property<string>("CommentContent")
@@ -172,6 +196,34 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Mac", b =>
+                {
+                    b.Property<int>("MacId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("EvTakimId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("KonukTakimId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MacTarihi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Stadyum")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MacId");
+
+                    b.HasIndex("EvTakimId");
+
+                    b.HasIndex("KonukTakimId");
+
+                    b.ToTable("Macs");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.NewsLetter", b =>
                 {
                     b.Property<int>("MailId")
@@ -188,6 +240,51 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("MailId");
 
                     b.ToTable("NewsLetters");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NotificationColor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("NotificationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NotificationDetails")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("NotificationStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("NotificationType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NotificationTypeSymbol")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("NotificationId");
+
+                    b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Takim", b =>
+                {
+                    b.Property<int>("TakimId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("TakimAdi")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TakimId");
+
+                    b.ToTable("Takims");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Writer", b =>
@@ -248,6 +345,21 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Blog");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Mac", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Takim", "EvTakim")
+                        .WithMany("EvMac")
+                        .HasForeignKey("EvTakimId");
+
+                    b.HasOne("EntityLayer.Concrete.Takim", "KonukTakim")
+                        .WithMany("KonukMac")
+                        .HasForeignKey("KonukTakimId");
+
+                    b.Navigation("EvTakim");
+
+                    b.Navigation("KonukTakim");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Blog", b =>
                 {
                     b.Navigation("Comments");
@@ -256,6 +368,13 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
                 {
                     b.Navigation("Blogs");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Takim", b =>
+                {
+                    b.Navigation("EvMac");
+
+                    b.Navigation("KonukMac");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Writer", b =>
